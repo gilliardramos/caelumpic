@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms'
 import { FotoModule } from './foto/foto.module';
 import { HttpModule } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { routing } from './app.routers';
+
 
 import { AppComponent } from './app.component';
 import { PainelModule } from './painel/painel.module';
@@ -17,7 +19,7 @@ import { ListagemComponent } from './listagem/listagem.component';
     ListagemComponent
   ],
   imports: [
-    BrowserModule, FotoModule, HttpModule, PainelModule, routing
+    BrowserModule, FotoModule, HttpModule, PainelModule, routing, FormsModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

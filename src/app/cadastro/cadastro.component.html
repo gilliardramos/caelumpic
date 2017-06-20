@@ -1,3 +1,47 @@
-<p>
-    Estamos trabalhando Nisso!
-</p>
+<div class="jumbotron">
+    <h1 class="text-center">
+        Cadastro de fotos</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <form action="" class="col-sm-8" (submit)="cadastrar($event)" [form-group]="formCadastro">
+
+            <div class="form-group">
+                <label for="titulo">Titulo</label>
+                <input required formControlName="titulo" [(ngModel)]="foto.titulo" name="titulo" type="text" id="titulo" class="form-control">
+
+                <span *ngIf="formCadastro.controls.titulo.invalid" class="form-control alert-danger">Titulo Obrigatório</span>
+
+            </div>
+
+            <div class="form-group">
+                <label for="url">URL</label>
+                <input required formControlName="url" [(ngModel)]="foto.url" name="url" type="text" id="url" class="form-control">
+
+                <span *ngIf="formCadastro.controls.url.invalid" class="form-control alert-danger">URL Obrigatório</span>
+            </div>
+
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <textarea name="foto" [(ngModel)]="foto.descricao" [value]="foto.descricao" type="text" id="descricao" class="form-control"></textarea>
+
+            </div>
+            <a [routerLink]="['']" class="btn btn-danger">Voltar</a>
+
+            <button type="submit" class=" btn btn-primary" [disable]="formCadastro.invalid">Salvar</button>
+
+        </form>
+
+        <aside class="col-sm-4">
+            <h3>Preview</h3>
+            <app-painel [titulo]="foto.titulo">
+                <app-foto [titulo]="foto.titulo" [url]="foto.url">{{foto.descricao}}</app-foto>
+            </app-painel>
+
+            <h4>extra</h4>
+            <p>
+                xs ate 768 <br> sm até 768 <br> md a partir de 922 <br> Lg a partir de 1200 <br>
+            </p>
+        </aside>
+    </div>

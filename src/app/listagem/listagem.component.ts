@@ -4,19 +4,18 @@ import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-listagem',
-  templateUrl: './listagem.component.html',
-  styleUrls: ['./listagem.component.css']
+  templateUrl: './listagem.component.html'
 })
 export class ListagemComponent implements OnInit {
 
-    title = 'Caelumpic';
-  fotos: FotoComponent [ ] = [ ]
+  title = 'Caelumpic';
+  fotos: FotoComponent [] = []
   constructor(http: Http) {
     http.get('http://localhost:3000/v1/fotos')
     .map (response => response.json())
     .subscribe(
       fotos => {   this.fotos = fotos },
-       erro => console.log(erro));
+       erro => console.error(erro));
       }
 
   ngOnInit() {

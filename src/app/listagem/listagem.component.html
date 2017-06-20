@@ -8,18 +8,26 @@
 <article class="container">
 
     <div class="row">
-        <div class="form-group">
-            <span class="input-group-btn">
+        <div class="col-md-12">
+            <form>
+                <div class="input-group">
+                    <span class="input-group-btn">
                     <a [routerLink] = "['/cadastro']" class="btn btn-primary">Nova Foto</a>
                 </span>
+
+                    <input type="text" #textoProcurado class="form-control" placeholder="Filtrar pelo titulo da foto">
+                </div>
+            </form>
         </div>
     </div>
+
+    <br />
+
     <div class="row">
-        <div *ngFor="let foto of fotos ;let i= index">
-            <app-painel [titulo]="foto.titulo | FiltroPorTitulo" class="col-md-4">
-                <app-foto [url]="foto.url" [titulo]="foto.titulo"></app-foto>
-            </app-painel>
-            <div *ngIf="(i%3)== 2" class="clearfix"></div>
-        </div>
+
+        <app-painel *ngFor="let foto of fotos | FiltroPorTitulo: textoProcurado.value" [titulo]="foto.titulo " class="col-md-2">
+            <app-foto [url]="foto.url" [titulo]="foto.titulo"></app-foto>
+        </app-painel>
     </div>
+
 </article>
