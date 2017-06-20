@@ -16,7 +16,7 @@
     </div>
     <div class="row">
         <div *ngFor="let foto of fotos ;let i= index">
-            <app-painel [titulo]="foto.titulo" class="col-md-4">
+            <app-painel [titulo]="foto.titulo | FiltroPorTitulo" class="col-md-4">
                 <app-foto [url]="foto.url" [titulo]="foto.titulo"></app-foto>
             </app-painel>
             <div *ngIf="(i%3)== 2" class="clearfix"></div>
