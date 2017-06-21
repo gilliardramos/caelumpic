@@ -1,47 +1,51 @@
 <div class="jumbotron">
     <h1 class="text-center">
-        Cadastro de fotos</h1>
+        Cadastro de Fotos
+    </h1>
 </div>
 
-<div class="container">
-    <div class="row">
-        <form action="" class="col-sm-8" (submit)="cadastrar($event)" [form-group]="formCadastro">
-
+<article>
+    <div class="container">
+        <form action="" class="col-sm-8" (submit)="cadastrar($event);$event.preventDefault()" [formGroup]="formCadastro">
             <div class="form-group">
-                <label for="titulo">Titulo</label>
-                <input required formControlName="titulo" [(ngModel)]="foto.titulo" name="titulo" type="text" id="titulo" class="form-control">
-
-                <span *ngIf="formCadastro.controls.titulo.invalid" class="form-control alert-danger">Titulo Obrigatório</span>
-
+                <label for="titulo">Título</label>
+                <input [(ngModel)]="foto.titulo" name="titulo" type="text" class="form-control" required autocomplete="off" formControlName="titulo">
+                <span class="form-control alert-danger" *ngIf="formCadastro.controls.titulo.errors && formCadastro.controls.titulo.errors.required">Titulo é obrigatório</span>
+                <span class="form-control alert-warning" *ngIf="formCadastro.controls.titulo.errors && formCadastro.controls.titulo.errors.minlength">Titulo deve ser mais longo</span>
             </div>
 
             <div class="form-group">
                 <label for="url">URL</label>
-                <input required formControlName="url" [(ngModel)]="foto.url" name="url" type="text" id="url" class="form-control">
-
-                <span *ngIf="formCadastro.controls.url.invalid" class="form-control alert-danger">URL Obrigatório</span>
+                <input [(ngModel)]="foto.url" name="url" type="text" class="form-control" required autocomplete="off" formControlName="url">
+                <span class="form-control alert-danger" *ngIf="formCadastro.controls.url.errors && formCadastro.controls.url.errors.required">URL é obrigatória</span>
+                <span class="form-control alert-warning" *ngIf="formCadastro.controls.url.errors && formCadastro.controls.url.errors.pattern">Digite uma URL válida</span>
             </div>
 
             <div class="form-group">
-                <label for="descricao">Descrição</label>
-                <textarea name="foto" [(ngModel)]="foto.descricao" [value]="foto.descricao" type="text" id="descricao" class="form-control"></textarea>
-
+                <label for="descricao">Descricao</label>
+                <textarea [(ngModel)]="foto.descricao" name="descricao" type="text" class="form-control" formControlName="descricao"></textarea>
             </div>
-            <a [routerLink]="['']" class="btn btn-danger">Voltar</a>
 
-            <button type="submit" class=" btn btn-primary" [disable]="formCadastro.invalid">Salvar</button>
+            <a [routerLink]='[""]' class="btn btn-danger">Voltar</a>
+            <button type="submit" class="btn btn-primary" [disabled]="formCadastro.invalid">Salvar</button>
 
         </form>
+
 
         <aside class="col-sm-4">
             <h3>Preview</h3>
             <app-painel [titulo]="foto.titulo">
-                <app-foto [titulo]="foto.titulo" [url]="foto.url">{{foto.descricao}}</app-foto>
+                <app-foto [titulo]="foto.titulo" [url]="foto.url">
+                    {{foto.descricao}}
+                </app-foto>
             </app-painel>
-
-            <h4>extra</h4>
-            <p>
-                xs ate 768 <br> sm até 768 <br> md a partir de 922 <br> Lg a partir de 1200 <br>
-            </p>
+            <h4>Extra:</h4>
+            <ul>
+                <li>xm até 768</li>
+                <li>sm a partir de 768</li>
+                <li>md a partir de 992</li>
+                <li>lg a partir de 1200</li>
+            </ul>
         </aside>
     </div>
+</article>

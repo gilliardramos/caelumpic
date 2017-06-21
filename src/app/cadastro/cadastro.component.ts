@@ -1,44 +1,64 @@
 import { Component, OnInit } from '@angular/core';
 import { FotoComponent } from '../foto/foto.component';
-import { Http, Headers } from '@angular/http';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AppService } from '../app.service';
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-
+  templateUrl: './cadastro.component.html'
 })
 export class CadastroComponent implements OnInit {
+
   foto: FotoComponent = new FotoComponent();
-  http: Http;
+  formCadastro: FormGroup;
+  service: AppService
+  rota: ActivatedRoute
+  router: Router;
 
-  formCadastro = FormGroup;
+  constructor( formBuilder: FormBuilder, service: AppService, rota: ActivatedRoute) {
+    // tslint:disable-next-line:no-unused-expression
+    this.rota = rota
+    this.service = service
+    this.router = this.router
+    this.rota.params.subscribe(
+      parametros => {
+        // tslint:disable-next-line:prefer-const
+        let id = parametros['id']
 
-  constructor(http: Http, formBuilder: FormBuilder) {
-    this.http = http
-    this.formCadastro = FormBuilder.group({
-      titulo: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-      url: ['', Validators.compose([Validators.required, Validators.pattern(/https?\:\/\/\s+\.\s+/i)])],
+        if (id) {
+
+          this.service.detalheFoto(id)
+          .subscribe(
+            (foto) => {
+              this.foto = foto
+            }
+            , erro => console.log(erro)
+          )
+        }
+      }
+    )
+
+    this.formCadastro = formBuilder.group({
+      titulo: ['' , Validators.compose([Validators.required, Validators.minLength(3)])],
+      url: ['', Validators.compose([Validators.required])],
       descricao: ['']
     })
-
-   }
-
-   ngOnInit() {
-   }
-
-  cadastrar(event: Event) {
-    const cabecalho: Headers = new Headers;
-     cabecalho.append('Content-Type', 'application/json')
-
-    this.http.post('http://localhost:3000/v1/fotos',
-    JSON.stringify(this.foto), {headers: cabecalho})
-      .subscribe(
-        () => {console.log('Foto Gravada com sucesso')},
-        erro => console.log(erro)
-      );
-
   }
 
+  ngOnInit() {
+  }
+
+  cadastrar(event: Event) {
+    event.preventDefault()
+    this.service.cadastrar(this.foto)
+    .subscribe(
+      () => {
+      console.log('Imagem cadastrada'),
+      this.router.navigate([''])
+    }
+    , erro => console.log(erro)
+    )
+  }
 
 }

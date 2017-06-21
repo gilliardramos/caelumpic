@@ -1,33 +1,28 @@
 <header class="jumbotron">
-    <h1 class="text-center">
-        {{title}}
-    </h1>
-
+    <h1 class="text-center">{{title}}</h1>
 </header>
-
 <article class="container">
 
-    <div class="row">
-        <div class="col-md-12">
-            <form>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                    <a [routerLink] = "['/cadastro']" class="btn btn-primary">Nova Foto</a>
-                </span>
+    <p *ngIf="mensagem" class="alert alert-info">{{mensagem}}</p>
 
-                    <input type="text" #textoProcurado class="form-control" placeholder="Filtrar pelo titulo da foto">
-                </div>
-            </form>
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-btn">
+                <a [routerLink]="['/cadastro']" class="btn btn-primary">Nova Foto</a>
+            </span>
+            <input #textoProcurado class="form-control" type="search" placeholder="Filtrar pelo título da foto" (keyup)=0>
         </div>
     </div>
+    <div class="row listagem">
+        <div *ngFor="let foto of fotos | filtroPorTitulo: textoProcurado.value;  let i=index">
+            <app-painel [titulo]="foto.titulo" class="col-md-3">
 
-    <br />
-
-    <div class="row">
-
-        <app-painel *ngFor="let foto of fotos | FiltroPorTitulo: textoProcurado.value" [titulo]="foto.titulo " class="col-md-2">
-            <app-foto [url]="foto.url" [titulo]="foto.titulo"></app-foto>
-        </app-painel>
+                <a [routerLink]="['/cadastro', foto._id]">
+                    <app-foto [url]="foto.url" [titulo]="foto.titulo"></app-foto>
+                </a>
+                <button (click)="delete(foto)" class="btn btn-danger">X</button>
+            </app-painel>
+            <div *ngIf="(i%4)==3" class="clearfix"></div>
+        </div>
     </div>
-
 </article>

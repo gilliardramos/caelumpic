@@ -2,27 +2,20 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-painel',
-    templateUrl: './painel.component.html'
-    styles: []})
+    templateUrl: 'painel.component.html',
+    styleUrls: ['painel.component.css']
+})
 
-export class PainelComponent {
-    // tslint:disable-next-line:no-trailing-whitespace
-    
-   @Input() titulo: string;
+export class PainelComponent implements OnInit {
+    @Input() titulo: string = '';
+    tituloCompleto: string = ''
 
-   constructor() {
+    constructor() {
 
-   }
-
-   // tslint:disable-next-line:use-life-cycle-interface
-   ngOnInit() {
-
-    // tslint:disable-next-line:prefer-const
-    let tituloCortado = this.titulo
-
-    if (tituloCortado.length > 7) {
-        this.titulo = `${tituloCortado.substr(0, 6)} ...`
     }
 
-   }
+    ngOnInit() {
+        this.tituloCompleto = this.titulo;
+        if (this.titulo.length > 7) {this.titulo = this.titulo.substr(0, 7) + '...'}
+    }
 }
